@@ -15,3 +15,15 @@ test('Login com sucesso', async ({ page }) => {
 
     await page.pause();
 })
+
+test('Usuário inseri credenciais inválidas', async ({ page }) => {
+    await page.goto('https://www.saucedemo.com');
+
+    await page.pause();
+    await page.locator('[data-test="username"]').fill('invalid_user');
+    await page.locator('[data-test="password"]').fill('invalid_password');
+
+    await page.locator('[data-test="login-button"]').click();
+
+    await expect(await page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
+});
