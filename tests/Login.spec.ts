@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { error } from 'console';
 
 test('Login com sucesso', async ({ page }) => {
     await page.goto('https://www.saucedemo.com');
@@ -25,5 +26,7 @@ test('Usuário inseri credenciais inválidas', async ({ page }) => {
 
     await page.locator('[data-test="login-button"]').click();
 
-    await expect(await page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
+    const errorTest = page.getByText('Epic sadface: Username and password do not match any user in this service');  
+
+    await expect(errorTest).toBeVisible();
 });
